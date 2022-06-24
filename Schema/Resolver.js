@@ -1,5 +1,5 @@
 const {users} = require('../data.js');
-//console.log(users.length);
+console.log(users.length);
 const fs = require('fs').promises;
 const path = require('path');
 const { response } = require('express');
@@ -15,9 +15,17 @@ const resolvers = {
 
     Mutation : {
         addUser : (parent,args) =>{
+            let lastElement = '';
+            if(users.length!=0){
+              lastElement = users[users.length-1].id;
+            }
+            else{
+              lastElement = 0;
+            }
+            autoIncrementId = lastElement + 1;
             const {id,name,age,married} = args;
             const user_data = {
-                id : users.length+1,
+                id : autoIncrementId,
                 name,
                 age,
                 married
